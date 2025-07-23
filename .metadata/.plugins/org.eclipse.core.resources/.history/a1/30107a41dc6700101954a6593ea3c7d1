@@ -1,0 +1,193 @@
+package com.aurionpro.GuitarApp.Solution.test;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.aurionpro.GuitarApp.Solution.model.Builder;
+import com.aurionpro.GuitarApp.Solution.model.Guitar;
+import com.aurionpro.GuitarApp.Solution.model.GuitarSpecs;
+import com.aurionpro.GuitarApp.Solution.model.Inventory;
+import com.aurionpro.GuitarApp.Solution.model.Type;
+import com.aurionpro.GuitarApp.Solution.model.Wood;
+
+public class GuitarTest {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Inventory inventory = new Inventory();
+        initializeInventory(inventory);
+
+        boolean running = true;
+
+        while (running) {
+            System.out.println("\n🎸 Welcome to the Guitar Shop!");
+            System.out.println("1. Owner - Add Guitar");
+            System.out.println("2. Customer - Search Guitar");
+            System.out.println("3. View All Guitars");
+            System.out.println("4. Exit");
+            System.out.print("Choose an option: ");
+            String choice = scanner.nextLine();
+
+            switch (choice) {
+                case "1":
+                    addGuitar(scanner, inventory);
+                    break;
+                case "2":
+                    searchGuitars(scanner, inventory);
+                    break;
+                case "3":
+                    displayAllGuitars(inventory);
+                    break;
+                case "4":
+                    System.out.println("👋 Thank you for visiting the Guitar Shop!");
+                    running = false;
+                    break;
+                default:
+                    System.out.println("❌ Invalid input. Please choose 1 to 4.");
+            }
+        }
+
+        scanner.close();
+    }
+
+    private static void addGuitar(Scanner scanner, Inventory inventory) {
+        System.out.println("\n🛠️ Owner Mode - Add a Guitar");
+
+        System.out.print("Enter Serial Number: ");
+        String serialNumber = scanner.nextLine();
+
+        System.out.print("Enter Price: ");
+        double price = Double.parseDouble(scanner.nextLine());
+
+        Builder builder = getBuilderInput(scanner, false);
+
+        System.out.print("Enter Model: ");
+        String model = scanner.nextLine();
+
+        Type type = getTypeInput(scanner, false);
+
+        System.out.print("Enter Number of Strings: ");
+        int numStrings = Integer.parseInt(scanner.nextLine());
+
+        Wood backWood = getWoodInput(scanner, "Back Wood", false);
+        Wood topWood = getWoodInput(scanner, "Top Wood", false);
+
+        GuitarSpecs specs = new GuitarSpecs(builder, model, type, numStrings, backWood, topWood);
+        Guitar guitar = new Guitar(serialNumber, price, specs);
+        inventory.addGuitar(guitar);
+
+        System.out.println("✅ Guitar added successfully!");
+    }
+
+    private static void searchGuitars(Scanner scanner, Inventory inventory) {
+        System.out.println("\n🔍 Customer Mode - Search Guitars (press Enter to skip any field)");
+
+        Builder builder = getBuilderInput(scanner, true);
+
+        System.out.print("Enter Model (or press Enter to skip): ");
+        String model = scanner.nextLine();
+
+        Type type = getTypeInput(scanner, true);
+
+        int numStrings = 0;
+        System.out.print("Enter Number of Strings (or press Enter to skip): ");
+        String strInput = scanner.nextLine();
+        if (!strInput.isBlank()) {
+            try {
+                numStrings = Integer.parseInt(strInput);
+            } catch (Exception e) {
+                System.out.println("⚠️ Invalid number. Skipping.");
+            }
+        }
+
+        Wood backWood = getWoodInput(scanner, "Back Wood", true);
+        Wood topWood = getWoodInput(scanner, "Top Wood", true);
+
+        GuitarSpecs userSpec = new GuitarSpecs(builder, model, type, numStrings, backWood, topWood);
+        List<Guitar> matches = inventory.search(userSpec);
+
+        if (matches.isEmpty()) {
+            System.out.println("❌ No matching guitars found.");
+        } else {
+            System.out.println("\n🎶 Matching Guitars:");
+            for (Guitar g : matches) {
+                printGuitarDetails(g);
+            }
+        }
+    }
+
+    private static void displayAllGuitars(Inventory inventory) {
+        System.out.println("\n📋 All Guitars in Inventory:");
+        List<Guitar> guitars = inventory.getAllGuitars();
+        if (guitars.isEmpty()) {
+            System.out.println("🚫 Inventory is empty.");
+        } else {
+            for (Guitar g : guitars) {
+                printGuitarDetails(g);
+            }
+        }
+    }
+
+    // ==== Utility Methods ====
+
+    private static Builder getBuilderInput(Scanner sc, boolean allowSkip) {
+        while (true) {
+            System.out.print("Enter Builder" + (allowSkip ? " (or press Enter to skip): " : ": "));
+            String input = sc.nextLine().toUpperCase();
+            if (allowSkip && input.isBlank()) return null;
+            try {
+                return Builder.valueOf(input);
+            } catch (Exception e) {
+                System.out.println("❌ Invalid builder.");
+            }
+        }
+    }
+
+    private static Type getTypeInput(Scanner sc, boolean allowSkip) {
+        while (true) {
+            System.out.print("Enter Type (ACOUSTIC/ELECTRIC)" + (allowSkip ? " (or press Enter to skip): " : ": "));
+            String input = sc.nextLine().toUpperCase();
+            if (allowSkip && input.isBlank()) return null;
+            try {
+                return Type.valueOf(input);
+            } catch (Exception e) {
+                System.out.println("❌ Invalid type.");
+            }
+        }
+    }
+
+    private static Wood getWoodInput(Scanner sc, String woodType, boolean allowSkip) {
+        while (true) {
+            System.out.print("Enter " + woodType + (allowSkip ? " (or press Enter to skip): " : ": "));
+            String input = sc.nextLine().toUpperCase();
+            if (allowSkip && input.isBlank()) return null;
+            try {
+                return Wood.valueOf(input);
+            } catch (Exception e) {
+                System.out.println("❌ Invalid wood.");
+            }
+        }
+    }
+
+    private static void printGuitarDetails(Guitar g) {
+        GuitarSpecs s = g.getSpecs();
+        System.out.println("+----------------------------------------------------------+");
+        System.out.println(" Serial: " + g.getSerialNumber() + " | Price: ₹" + g.getPrice());
+        System.out.println(" Model: " + s.getModel() + " | Type: " + s.getType());
+        System.out.println(" Strings: " + s.getNumStrings());
+        System.out.println(" Builder: " + s.getBuilder() + " | Back: " + s.getBackwood() + " | Top: " + s.getTopwood());
+        System.out.println("+----------------------------------------------------------+");
+    }
+
+    private static void initializeInventory(Inventory inventory) {
+        inventory.addGuitar(new Guitar("11277", 14999.95, new GuitarSpecs(Builder.FENDER, "Stratocastor", Type.ELECTRIC, 12, Wood.ALDER, Wood.ALDER)));
+        inventory.addGuitar(new Guitar("V95693", 15499.95, new GuitarSpecs(Builder.FENDER, "Stratocastor", Type.ELECTRIC, 12, Wood.ALDER, Wood.ALDER)));
+        inventory.addGuitar(new Guitar("70108276", 22999.95, new GuitarSpecs(Builder.GIBSON, "SG", Type.ELECTRIC, 12, Wood.MAHOGANY, Wood.MAHOGANY)));
+        inventory.addGuitar(new Guitar("A10001", 13999.95, new GuitarSpecs(Builder.MARTIN, "D-28", Type.ACOUSTIC, 6, Wood.MAPLE, Wood.CEDAR)));
+        inventory.addGuitar(new Guitar("A10002", 11999.95, new GuitarSpecs(Builder.COLLINGS, "OM2H", Type.ACOUSTIC, 6, Wood.CEDAR, Wood.SITKA)));
+        inventory.addGuitar(new Guitar("A10003", 18999.95, new GuitarSpecs(Builder.OLSON, "SJ", Type.ACOUSTIC, 6, Wood.INDIAN_ROSEWOOD, Wood.ADIRONDACK)));
+        inventory.addGuitar(new Guitar("A10004", 20999.95, new GuitarSpecs(Builder.RYAN, "Nightingale", Type.ACOUSTIC, 12, Wood.CEDAR, Wood.COCOBOLO)));
+        inventory.addGuitar(new Guitar("A10005", 25999.95, new GuitarSpecs(Builder.PRS, "Custom 24", Type.ELECTRIC, 6, Wood.MAPLE, Wood.MAHOGANY)));
+        inventory.addGuitar(new Guitar("A10006", 14949.95, new GuitarSpecs(Builder.FENDER, "Telecaster", Type.ELECTRIC, 6, Wood.ALDER, Wood.MAPLE)));
+        inventory.addGuitar(new Guitar("A10007", 13499.95, new GuitarSpecs(Builder.GIBSON, "Les Paul", Type.ELECTRIC, 6, Wood.MAHOGANY, Wood.MAPLE)));
+    }
+}

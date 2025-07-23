@@ -1,0 +1,5 @@
+package com.aurionpro.GuitarApp.Violation.model;
+
+public class Guitar {
+
+}

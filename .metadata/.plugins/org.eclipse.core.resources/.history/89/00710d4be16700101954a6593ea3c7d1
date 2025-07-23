@@ -1,0 +1,34 @@
+package com.aurionpro.GuitarApp.Solution.FinalTest;
+
+import java.util.Scanner;
+
+public class InputValidator {
+	public static String getString(Scanner scanner, String message) {
+        System.out.print(message);
+        return scanner.nextLine().trim();
+    }
+
+    public static int getInt(Scanner scanner, String message) {
+        while (true) {
+            System.out.print(message);
+            try {
+                return Integer.parseInt(scanner.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number. Try again.");
+            }
+        }
+    }
+
+    public static double getDouble(Scanner scanner, String message) {
+        while (true) {
+            System.out.print(message);
+            try {
+                return Double.parseDouble(scanner.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid price. Try again.");
+            }
+        }
+    }
+}
+
+}

@@ -1,0 +1,80 @@
+package com.aurionpro.GuitarApp.Solution.FinalTest;
+
+import java.util.Scanner;
+
+import com.aurionpro.GuitarApp.Solution.model.Builder;
+import com.aurionpro.GuitarApp.Solution.model.Inventory;
+import com.aurionpro.GuitarApp.Solution.model.Type;
+import com.aurionpro.GuitarApp.Solution.model.Wood;
+
+public class GuitarUIDesign {
+
+	 public static void launchMainMenu(Inventory inventory) {
+	        Scanner scanner = new Scanner(System.in);
+	        boolean exit = false;
+
+	        while (!exit) {
+	            System.out.println("\n=== Guitar Inventory Menu ===");
+	            System.out.println("1. Display All Guitars");
+	            System.out.println("2. Search Guitar");
+	            System.out.println("3. Add Guitar (Owner)");
+	            System.out.println("4. Exit");
+	            System.out.print("Enter your choice: ");
+
+	            String choice = scanner.nextLine().trim();
+
+	            switch (choice) {
+	                case "1":
+	                    GuitarPrinter.displayGuitars(inventory.getAllGuitars());
+	                    break;
+	                case "2":
+	                    GuitarSearchService.searchGuitars(scanner, inventory);
+	                    break;
+	                case "3":
+	                    GuitarSearchService.addGuitar(scanner, inventory);
+	                    break;
+	                case "4":
+	                    System.out.println("Thank you for using Guitar Finder!");
+	                    exit = true;
+	                    break;
+	                default:
+	                    System.out.println("Invalid option. Please choose 1-4.");
+	            }
+	        }
+	        scanner.close();
+	    }
+
+	    public static <T extends Enum<T>> T selectOption(Scanner scanner, String label, T[] values) {
+	        System.out.println("Select " + label + ":");
+	        for (int i = 0; i < values.length; i++) {
+	            System.out.println((i + 1) + ". " + values[i]);
+	        }
+	        int choice = InputValidator.getInt(scanner, "Enter choice (1 - " + values.length + "): ");
+	        return values[Math.max(0, Math.min(values.length - 1, choice - 1))];
+	    }
+
+	    public static GuitarSpec collectSearchInput(Scanner scanner, Inventory inventory) {
+	        System.out.println("\n=== Search Guitar ===");
+	        Builder builder = selectOption(scanner, "Builder", Builder.values());
+	        String model = InputValidator.getString(scanner, "Enter Model (or press Enter to skip): ");
+	        Type type = selectOption(scanner, "Type", Type.values());
+	        int strings = InputValidator.getInt(scanner, "Enter Number of Strings (0 to skip): ");
+	        Wood back = selectOption(scanner, "Back Wood", Wood.values());
+	        Wood top = selectOption(scanner, "Top Wood", Wood.values());
+
+	        return new GuitarSpec(builder, model, type, strings > 0 ? strings : -1, back, top);
+	    }
+
+	    public static void initializeInventory(Inventory inventory) {
+	        inventory.addGuitar("F001", 14999.95, Builder.FENDER, "Stratocastor", Type.ELECTRIC, 12, Wood.ALDER, Wood.ALDER);
+	        inventory.addGuitar("M001", 12999.95, Builder.MARTIN, "D-28", Type.ACOUSTIC, 6, Wood.MAPLE, Wood.SITKA);
+	        inventory.addGuitar("G001", 15999.95, Builder.GIBSON, "SG", Type.ELECTRIC, 10, Wood.MAHOGANY, Wood.MAHOGANY);
+	    }
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	}

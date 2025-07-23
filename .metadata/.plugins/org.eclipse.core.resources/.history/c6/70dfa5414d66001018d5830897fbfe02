@@ -1,0 +1,45 @@
+package com.aurionpro.calculator.test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import com.aurionpro.calculator.model.MathUtils;
+
+public class MathUtilsTest {
+	MathUtils math = new MathUtils();
+	  @BeforeEach
+	    void setup() {
+	        System.out.println("Starting a new test...");
+	    }
+
+	    @AfterEach
+	    void teardown() {
+	        System.out.println("Test completed.\n");
+	    }
+	    @Test
+	    @DisplayName("Test Addition Method")
+	    void testAdd() {
+	        assertEquals(8, math.add(5, 3), "Addition failed");
+	    }
+
+	    @Test
+	    @DisplayName("Test Multiplication Method")
+	    void testMultiply() {
+	        assertEquals(10, math.multiply(5, 3), "Multiplication failed");
+	    }
+
+}
+//🔹 Assignment 1: Math Utility Class Test
+//Problem Statement:
+//Create a class MathUtils with the following methods:
+// int add(int a, int b)
+// int multiply(int a, int b)
+// boolean isEven(int number)
+//Write a test class using:
+// @BeforeEach and @AfterEach to log setup and teardown (i.e start and stop)
+// @DisplayName for custom test method names
+// Use @ParameterizedTest with @ValueSource to test isEven() for multiple values

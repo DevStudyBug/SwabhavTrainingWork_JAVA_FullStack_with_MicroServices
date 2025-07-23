@@ -1,0 +1,13 @@
+package com.aurionpro.calculator.test;
+
+import org.junit.jupiter.api.Test;
+import com.aurionpro.calculator.model.calculator;
+
+public class CalculatorTest {
+	calculator cal = new calculator();
+	@Test
+	public void testAddition() {
+		int sum = cal.additon(3,5);
+		assertEquals(8,sum);
+	}
+}

@@ -1,0 +1,44 @@
+package com.aurionpro.test;
+
+import java.util.Scanner;
+
+public class SumofRowAndColumn {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner (System.in);
+		System.out.println("Enter the size of row");
+		int rowSize  = scanner.nextInt();
+		
+		System.out.println("Enter the size of column");
+		int columnSize  = scanner.nextInt();
+
+		int[][] matrix = new int[rowSize][columnSize];
+		System.out.println("enter the elements ");
+		for(int i =0; i< rowSize; i++) {
+			for (int j =0; j< columnSize; j++) {
+				matrix[i][j] =scanner.nextInt();
+			}
+		}
+		
+		System.out.println("element are  ");
+		for(int[] row: matrix) {
+			for(int element : row) {
+				System.out.print(element+" ");
+			}
+			System.out.println();	}
+		//start 
+		
+		for(int i =0; i< rowSize;i++) {
+			int sumofRow = 0;
+			int sumofColumn = 0;
+			for (int j= 0 ; j< columnSize; j++) {
+				sumofRow += matrix[i][j];
+				sumofColumn += matrix[j][i];	
+				
+			}
+			System.out.println(" sum of row : " +(i+1)+ " : "+ sumofRow);
+			System.out.println(" sum of column: "+ (i+1) + " : " + sumofColumn);	
+			
+		}
+	}
+		
+}

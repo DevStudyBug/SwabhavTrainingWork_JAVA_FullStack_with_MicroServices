@@ -1,0 +1,17 @@
+package com.aurionpro.calculator.test;
+
+import com.aurionpro.calculator.model.MathUtils;
+
+public class MathUtilsTest {
+	MathUtils math = new MathUtils();
+}
+//🔹 Assignment 1: Math Utility Class Test
+//Problem Statement:
+//Create a class MathUtils with the following methods:
+// int add(int a, int b)
+// int multiply(int a, int b)
+// boolean isEven(int number)
+//Write a test class using:
+// @BeforeEach and @AfterEach to log setup and teardown (i.e start and stop)
+// @DisplayName for custom test method names
+// Use @ParameterizedTest with @ValueSource to test isEven() for multiple values

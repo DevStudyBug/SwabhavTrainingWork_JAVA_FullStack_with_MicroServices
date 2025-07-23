@@ -1,0 +1,23 @@
+package com.aurionpro.calculator.test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
+import com.aurionpro.calculator.model.calculator;
+
+public class CalculatorTest {
+
+    calculator cal = new calculator();
+
+    @Test
+    public void testAddition() {
+        int sum = cal.additon(3, 5);
+        assertEquals(8, sum);
+    }
+
+    @Test
+    public void testSubtraction() {
+        assertEquals(9, cal.subtraction(10, 2));
+    }
+}

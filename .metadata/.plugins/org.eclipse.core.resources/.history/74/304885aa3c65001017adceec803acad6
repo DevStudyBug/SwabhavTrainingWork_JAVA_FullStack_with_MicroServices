@@ -1,0 +1,48 @@
+package com.aurionpro.GuitarApp.Solution.model;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+public class Inventory {
+	private List<Guitar> guitars;
+	
+	public Inventory() {
+		guitars = new LinkedList<Guitar>();
+	}
+	public void addGuitar(String serialNumber, double price, Builder builder, String model, Type type, Wood backwood,
+			Wood topwood) {
+		Guitar guitar = new Guitar (serialNumber, price, builder, model, type, backwood, topwood);
+		guitars.add(guitar);
+	}
+	public Guitar getGuitar(String serial) {
+		for (Guitar guitar : guitars) {
+			if(guitar.getSerialNumber().equals(serial)) {
+		return guitar;
+		}
+		}
+		return null;
+	}
+	public List<Guitar> search(Guitar searchGuitar){
+		List<Guitar> matchingGuitars = new LinkedList<Guitar>() ;
+			for (Iterator<Guitar> i = guitars.iterator(); i.hasNext();)
+			{
+				Guitar guitar =(Guitar)i.next();
+				if(searchGuitar.getBuilder()!= guitar.getBuilder())
+					continue;
+				// for string model
+				String model = searchGuitar.getModel();
+				if((model!=null)&& (!model.equals(""))&&
+						(!model.equals(guitar.getModel())))
+					continue;
+				if(searchGuitar.getType()!= guitar.getType())
+					continue;
+				if(searchGuitar.getBackwood()!= guitar.getBackwood())
+					continue;
+				if(searchGuitar.getTopwood()!= guitar.getTopwood())
+					continue;
+				matchingGuitars.add(guitar);
+			}
+			return matchingGuitars;
+	}
+}

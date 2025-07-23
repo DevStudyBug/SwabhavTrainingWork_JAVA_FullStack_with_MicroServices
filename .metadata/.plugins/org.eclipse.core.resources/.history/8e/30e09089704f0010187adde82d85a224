@@ -1,0 +1,34 @@
+package assignment.week1;
+//Input a student’s marks and print grade:
+// 90+ → A
+// 75–89 → B
+// 60–74 → C
+// Below 60 → D
+
+import java.util.Scanner;
+
+public class Q11_GradeCalculator {
+
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter a your marks : ");
+		int marks = scanner.nextInt();
+//		scanner.nextLine();
+		String grade= "";
+		if(marks >= 90) {
+			grade = "A";
+			System.out.println("you got A grade ");
+		}
+		else if (marks >= 75 && marks <= 89) {
+			grade = "B";
+			System.out.println("you got B grade ");
+		}
+		else if(marks >=60 && marks <=74) {
+			grade = "C";
+			System.out.println("you got C grade ");
+		}
+		else {
+			System.out.println("you got D grade ");
+		}
+	}
+}

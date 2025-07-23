@@ -1,0 +1,30 @@
+package com.aurionpro.model;
+
+import java.util.ArrayList;
+
+public class ArrayListDemo {
+	public static void main(String[] args) {
+		ArrayList <String> list = new ArrayList<>();
+		list.add("apple");
+		list.add("mango");
+		list.add("cherry");
+		System.out.println("arraylist: " + list);
+		//add at index
+		list.add(0,"guava");
+		System.out.println(list);
+		// remove
+		list.remove(0);
+		System.out.println(list);
+		//set
+		list.set(1, "Orange");
+		System.out.println(list);
+		
+		//contains
+		System.out.println("Contains:? "+list.contains("mango")); //false
+		
+		//indexOf
+		System.out.println("Index of cherry: "+list.indexOf("cherry"));
+		
+	}
+
+}

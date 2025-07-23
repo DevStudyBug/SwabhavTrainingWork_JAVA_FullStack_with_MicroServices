@@ -1,0 +1,35 @@
+package com.aurionpro.GuitarApp.Solution.FinalTest;
+
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Locale;
+
+import com.aurionpro.GuitarApp.Solution.model.Guitar;
+import com.aurionpro.GuitarApp.Solution.model.GuitarSpecs;
+
+public class GuitarPrinter {
+	public static void printGuitars(List<Guitar> guitars) {
+        if (guitars == null || guitars.isEmpty()) {
+            System.out.println("\nNo guitars found matching your criteria.\n");
+            return;
+        }
+
+        String format = "| %-10s | %-10s | %-10s | %-15s | %-10s | %-10s | %-10s |%n";
+        String line = "+------------+------------+------------+-----------------+------------+------------+------------+";
+
+        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
+
+        System.out.println("\n" + line);
+        System.out.format(format, "Serial No", "Price", "Builder", "Model", "Type", "BackWood", "TopWood");
+        System.out.println(line);
+
+        for (Guitar guitar : guitars) {
+            GuitarSpecs spec = guitar.getSpecs();
+            System.out.printf("%-12s ₹%-9.2f %-10s %-10s %-10s %-10s %-10s\n",
+                guitar.getSerialNumber(), guitar.getPrice(),
+                spec.getBuilder(), spec.getModel(), spec.getType(),
+                spec.getBackwood(), spec.getTopwood());
+        }
+        System.out.println(line + "\n");
+    }
+}

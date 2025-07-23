@@ -1,0 +1,69 @@
+package com.aurionpro.model;
+
+import java.util.Scanner;
+
+public class TicTacToeFacade {
+	private Player player1;
+	private Player player2;
+	private Board board;
+	private GameEngine engine;
+
+	public void startGame() {
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println("Welcome to Tic Tac Toe!");
+
+		System.out.print("Player 1, enter your name: ");
+		String name1 = scanner.nextLine();
+		player1 = new Player(name1, Symbol.X);
+
+		System.out.print("Player 2, enter your name: ");
+		String name2 = scanner.nextLine();
+		player2 = new Player(name2, Symbol.O);
+
+		board = new Board();
+		engine = new GameEngine(player1);
+
+		GameStatus status = GameStatus.IN_PROGRESS;
+
+		while (status == GameStatus.IN_PROGRESS) {
+			board.displayBoard();
+			Player current = engine.getCurrPlayer();
+			System.out
+					.println(current.getName() + "'s (" + current.getSymbol() + ") turn. Enter row and column (0-2): ");
+
+			int row, col;
+			while (true) {
+				try {
+					row = scanner.nextInt();
+					col = scanner.nextInt();
+					if (row < 0 || row > 2 || col < 0 || col > 2) {
+						System.out.println("Invalid input. Try again.");
+					} else if (!board.isCellEmpty(row, col)) {
+						System.out.println("Cell is already occupied. Try again.");
+					} else {
+						break;
+					}
+				} catch (Exception e) {
+					System.out.println("Invalid input. Try again.");
+					scanner.nextLine(); // clear invalid input
+				}
+			}
+			board.placeSymbol(row, col, current.getSymbol());
+
+			if (engine.isWinningMove(board, current.getSymbol())) {
+				board.displayBoard();
+				System.out.println("Result: " + current.getName() + " wins! Congratulations!");
+				status = GameStatus.WIN;
+			} else if (board.isfull()) {
+				board.displayBoard();
+				System.out.println("Result: It's a draw!");
+				status = GameStatus.DRAW;
+			} else {
+				engine.switchPlayer(player1, player2);
+			}
+		}
+		scanner.close();
+	}
+}
+

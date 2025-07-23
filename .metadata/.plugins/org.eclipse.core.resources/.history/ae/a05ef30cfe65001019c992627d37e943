@@ -1,0 +1,32 @@
+package com.aurionpro.calculator.test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
+
+import com.aurionpro.calculator.model.calculator;
+
+public class CalculatorTest {
+
+    calculator cal = new calculator();
+    @Test
+    public void testAddition() {
+        int sum = cal.additon(3, 5);
+        assertEquals(8, sum);
+    }
+    @Test
+    @Disabled
+//    @RepeatedTest(5)
+    public void testSubtraction() {
+        assertEquals(8, cal.subtraction(10, 2));
+    }
+    @Test
+    public void testDivision()
+    {
+        //assertEquals(2, cal.division(10,2));
+        assertThrows(ArithmeticException.class, () -> cal.division(5, 0));
+    }
+}

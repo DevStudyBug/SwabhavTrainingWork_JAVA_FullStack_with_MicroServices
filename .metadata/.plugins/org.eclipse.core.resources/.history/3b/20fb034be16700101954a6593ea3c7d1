@@ -1,0 +1,34 @@
+package com.aurionpro.GuitarApp.Solution.FinalTest;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.aurionpro.GuitarApp.Solution.model.Builder;
+import com.aurionpro.GuitarApp.Solution.model.Guitar;
+import com.aurionpro.GuitarApp.Solution.model.Inventory;
+import com.aurionpro.GuitarApp.Solution.model.Type;
+import com.aurionpro.GuitarApp.Solution.model.Wood;
+
+public class GuitarSearchService {
+	public static void searchGuitars(Scanner scanner, Inventory inventory) {
+        GuitarSpec searchSpec = GuitarUIDesign.collectSearchInput(scanner, inventory);
+        List<Guitar> results = inventory.search(searchSpec);
+        System.out.println("\n=== Search Results ===");
+        GuitarPrinter.displayGuitars(results);
+    }
+
+    public static void addGuitar(Scanner scanner, Inventory inventory) {
+        System.out.println("\n=== Add New Guitar ===");
+        String serial = InputValidator.getString(scanner, "Enter Serial Number: ");
+        double price = InputValidator.getDouble(scanner, "Enter Price: ");
+        Builder builder = GuitarUIDesign.selectOption(scanner, "Builder", Builder.values());
+        String model = InputValidator.getString(scanner, "Enter Model: ");
+        Type type = GuitarUIDesign.selectOption(scanner, "Type", Type.values());
+        int strings = InputValidator.getInt(scanner, "Enter Number of Strings: ");
+        Wood back = GuitarUIDesign.selectOption(scanner, "Back Wood", Wood.values());
+        Wood top = GuitarUIDesign.selectOption(scanner, "Top Wood", Wood.values());
+
+        inventory.addGuitar(serial, price, builder, model, type, strings, back, top);
+        System.out.println("✅ Guitar successfully added!");
+    }
+}

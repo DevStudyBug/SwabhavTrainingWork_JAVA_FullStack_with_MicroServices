@@ -1,0 +1,60 @@
+package com.aurionpro.model;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class ArrayListDemo {
+	public static void main(String[] args) {
+		ArrayList <String> list = new ArrayList<>();
+		list.add("apple");
+		list.add("mango");
+		list.add("cherry");
+		System.out.println("arraylist: " + list);
+		//add at index
+		list.add(0,"guava");
+		System.out.println(list);
+		// remove
+		list.remove(0);
+		System.out.println(list);
+		//set
+		list.set(1, "Orange");
+		System.out.println(list);
+		
+		//contains
+		System.out.println("Contains elements? : "+list.contains("mango")); //false
+		
+		//indexOf
+		System.out.println("Index of cherry: "+list.indexOf("cherry"));
+		
+		// doubt!! //last indexOf 
+		
+		System.out.println("last index of element: "+ list.lastIndexOf("cherry"));
+		
+		//size
+		System.out.println("Size: "+ list.size());
+		
+		//Is the list empty?
+		System.out.println("Is Empty? "+ list.isEmpty());
+		
+		//clear
+		list.clear();
+		System.out.println("clear list "+ list);
+		
+		//trim to size 
+		list.trimToSize();
+		list.add("kiwi");
+		System.out.println("Final list :"+ list );
+		
+		//clone // doubt
+//		list.clone();
+//		System.out.println("clone "+ list);
+		
+		// add all
+		list.addAll(Arrays.asList("Banana", "Dragonfruit","Apple"));
+		System.out.println("Add all element: "+ list);
+//		list.add("Banana", "Dragonfruit","kiwi");
+		
+		
+	}
+
+}

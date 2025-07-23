@@ -1,0 +1,7 @@
+package com.aurionpro.Adaptor.Charger;
+
+public interface OldCharger {
+	public static void chargeWithMicroUSB() {
+		System.out.println("Charging with Micro-USB charger ... ");
+	}
+}

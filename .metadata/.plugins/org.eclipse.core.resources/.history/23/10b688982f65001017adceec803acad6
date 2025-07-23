@@ -1,0 +1,5 @@
+package com.aurionpro.GuitarApp.Solution.model;
+
+public enum Type {
+
+}

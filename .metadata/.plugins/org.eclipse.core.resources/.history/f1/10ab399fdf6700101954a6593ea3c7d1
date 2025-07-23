@@ -1,0 +1,194 @@
+package com.aurionpro.GuitarApp.Solution.test;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.aurionpro.GuitarApp.Solution.model.Builder;
+import com.aurionpro.GuitarApp.Solution.model.Guitar;
+import com.aurionpro.GuitarApp.Solution.model.GuitarSpecs;
+import com.aurionpro.GuitarApp.Solution.model.Inventory;
+import com.aurionpro.GuitarApp.Solution.model.Type;
+import com.aurionpro.GuitarApp.Solution.model.Wood;
+
+public class GuitarTest {
+
+
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Inventory inventory = new Inventory();
+        initializeInventory(inventory);
+
+        while (true) {
+            System.out.println("\n--- Welcome to Guitar Shop ---");
+            System.out.println("1. Owner");
+            System.out.println("2. Customer");
+            System.out.println("3. View All Guitars");
+            System.out.println("4. Exit");
+            System.out.print("Select an option: ");
+
+            String choice = sc.nextLine();
+
+            switch (choice) {
+                case "1":
+                    handleOwner(inventory, sc);
+                    break;
+                case "2":
+                    handleCustomer(inventory, sc);
+                    break;
+                case "3":
+                    displayAllGuitars(inventory);
+                    break;
+                case "4":
+                    System.out.println("Thank you for visiting the Guitar Shop!");
+                    sc.close();
+                    return;
+                default:
+                    System.out.println("Invalid option. Try again.");
+            }
+        }
+    }
+
+    private static void handleOwner(Inventory inventory, Scanner sc) {
+        System.out.println("\n--- Owner: Add New Guitar ---");
+
+        System.out.print("Enter Serial Number: ");
+        String serialNumber = sc.nextLine();
+
+        double price = 0.0;
+        while (true) {
+            System.out.print("Enter Price: ");
+            try {
+                price = Double.parseDouble(sc.nextLine());
+                break;
+            } catch (Exception e) {
+                System.out.println("Invalid price.");
+            }
+        }
+
+        Builder builder = getBuilderInput(sc, false);
+        System.out.print("Enter Model: ");
+        String model = sc.nextLine();
+        Type type = getTypeInput(sc, false);
+
+        int numStrings = 0;
+        while (true) {
+            System.out.print("Enter Number of Strings: ");
+            try {
+                numStrings = Integer.parseInt(sc.nextLine());
+                break;
+            } catch (Exception e) {
+                System.out.println("Invalid number.");
+            }
+        }
+
+        Wood backWood = getWoodInput(sc, "Back", false);
+        Wood topWood = getWoodInput(sc, "Top", false);
+
+        inventory.addGuitar(serialNumber, price, builder, model, type, numStrings, backWood, topWood);
+        System.out.println("✅ Guitar added successfully!");
+    }
+
+    private static void handleCustomer(Inventory inventory, Scanner sc) {
+        System.out.println("\n--- Customer: Search for Guitar ---");
+        Builder builder = getBuilderInput(sc, true);
+
+        System.out.print("Enter Model (or 'skip'): ");
+        String model = sc.nextLine();
+        model = model.equalsIgnoreCase("skip") ? "" : model;
+
+        Type type = getTypeInput(sc, true);
+
+        System.out.print("Enter Number of Strings (or 'skip'): ");
+        String numStr = sc.nextLine();
+        int numStrings = numStr.equalsIgnoreCase("skip") ? 0 : Integer.parseInt(numStr);
+
+        Wood backWood = getWoodInput(sc, "Back", true);
+        Wood topWood = getWoodInput(sc, "Top", true);
+
+        GuitarSpecs searchSpec = new GuitarSpecs(builder, model, type, numStrings, backWood, topWood);
+        List<Guitar> results = inventory.search(searchSpec);
+
+        if (results.isEmpty()) {
+            System.out.println("❌ No guitars matched your criteria.");
+        } else {
+            System.out.println("\n🎸 Matching Guitars:");
+            for (Guitar g : results) {
+                System.out.printf("Serial: %-10s Price: ₹%.2f | %s %s (%s)\n",
+                        g.getSerialNumber(), g.getPrice(), g.getSpecs().getBuilder(),
+                        g.getSpecs().getModel(), g.getSpecs().getType());
+            }
+        }
+    }
+
+    private static void displayAllGuitars(Inventory inventory) {
+        List<Guitar> allGuitars = inventory.getAllGuitars();
+        if (allGuitars.isEmpty()) {
+            System.out.println("No guitars in inventory.");
+            return;
+        }
+
+        System.out.println("\n--- Guitar Inventory ---");
+        System.out.printf("%-12s %-10s %-10s %-12s %-8s %-15s %-15s %-10s\n",
+                "Serial", "Price", "Builder", "Model", "Type", "Back Wood", "Top Wood", "Strings");
+        System.out.println("----------------------------------------------------------------------------------------");
+        for (Guitar g : allGuitars) {
+            GuitarSpecs s = g.getSpecs();
+            System.out.printf("%-12s ₹%-9.2f %-10s %-12s %-8s %-15s %-15s %-10d\n",
+                    g.getSerialNumber(), g.getPrice(), s.getBuilder(), s.getModel(), s.getType(),
+                    s.getBackwood(), s.getTopwood(), s.getNumStrings());
+        }
+    }
+
+    private static Builder getBuilderInput(Scanner sc, boolean allowSkip) {
+        while (true) {
+            System.out.print("Enter Builder (or 'skip'): ");
+            String input = sc.nextLine().toUpperCase();
+            if (allowSkip && input.equals("SKIP")) return null;
+            try {
+                return Builder.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid builder.");
+            }
+        }
+    }
+
+    private static Type getTypeInput(Scanner sc, boolean allowSkip) {
+        while (true) {
+            System.out.print("Enter Type (or 'skip'): ");
+            String input = sc.nextLine().toUpperCase();
+            if (allowSkip && input.equals("SKIP")) return null;
+            try {
+                return Type.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid type.");
+            }
+        }
+    }
+
+    private static Wood getWoodInput(Scanner sc, String label, boolean allowSkip) {
+        while (true) {
+            System.out.printf("Enter %s Wood (or 'skip'): ", label);
+            String input = sc.nextLine().toUpperCase();
+            if (allowSkip && input.equals("SKIP")) return null;
+            try {
+                return Wood.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid wood.");
+            }
+        }
+    }
+
+    private static void initializeInventory(Inventory inventory) {
+        inventory.addGuitar("11277", 14999.95, Builder.FENDER, "Stratocastor", Type.ELECTRIC, 12, Wood.ALDER, Wood.ALDER);
+        inventory.addGuitar("V95693", 15499.95, Builder.FENDER, "Stratocastor", Type.ELECTRIC, 12, Wood.ALDER, Wood.ALDER);
+        inventory.addGuitar("70108276", 22999.95, Builder.GIBSON, "SG", Type.ELECTRIC, 12, Wood.MAHOGANY, Wood.MAHOGANY);
+        inventory.addGuitar("A10001", 13999.95, Builder.MARTIN, "D-28", Type.ACOUSTIC, 6, Wood.MAPLE, Wood.CEDAR);
+        inventory.addGuitar("A10002", 11999.95, Builder.COLLINGS, "OM2H", Type.ACOUSTIC, 6, Wood.CEDAR, Wood.SITKA);
+        inventory.addGuitar("A10003", 18999.95, Builder.OLSON, "SJ", Type.ACOUSTIC, 6, Wood.INDIAN_ROSEWOOD, Wood.ADIRONDACK);
+        inventory.addGuitar("A10004", 20999.95, Builder.RYAN, "Nightingale", Type.ACOUSTIC, 12, Wood.CEDAR, Wood.COCOBOLO);
+        inventory.addGuitar("A10005", 25999.95, Builder.PRS, "Custom 24", Type.ELECTRIC, 6, Wood.MAPLE, Wood.MAHOGANY);
+        inventory.addGuitar("A10006", 14949.95, Builder.FENDER, "Telecaster", Type.ELECTRIC, 6, Wood.ALDER, Wood.MAPLE);
+        inventory.addGuitar("A10007", 13499.95, Builder.GIBSON, "Les Paul", Type.ELECTRIC, 6, Wood.MAHOGANY, Wood.MAPLE);
+    }
+}

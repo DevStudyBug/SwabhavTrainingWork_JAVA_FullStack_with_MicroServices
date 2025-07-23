@@ -1,0 +1,121 @@
+package com.aurionpro.GuitarApp.Solution.FinalTest;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.aurionpro.GuitarApp.Solution.model.Builder;
+import com.aurionpro.GuitarApp.Solution.model.Guitar;
+import com.aurionpro.GuitarApp.Solution.model.GuitarSpecs;
+import com.aurionpro.GuitarApp.Solution.model.Inventory;
+import com.aurionpro.GuitarApp.Solution.model.Type;
+import com.aurionpro.GuitarApp.Solution.model.Wood;
+
+public class GuitarUIDesign {
+    private Inventory inventory = new Inventory();
+    private GuitarSearchService searchService = new GuitarSearchService(inventory);
+    private GuitarPrinter printer = new GuitarPrinter();
+    private Scanner scanner = new Scanner(System.in);
+
+    public void start() {
+        initializeInventory();
+
+        System.out.println("\n");
+   	 System.out.println("""
+        		⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀        ⠀⢀⣀⡀⠀⢀⣠⣴⣶⣿⣿⣷⣦⡀
+        		⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀        ⠀⠀⠀⣾⣿⣿⣿⣿⣿⣿⣿⢿⣿⣿⣿⣿⣧
+        	        	⣠⣤⣤⣤⣄⣀⣀⣀⣀⣀⣀⣠⣤⣤⣤⣤⣿⣿⡟⠉⠉⢻⣿⣿⠀⣿⣿⣿⣿⣿
+        	        	⠹⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⣿⣿⣧⣀⣀⣼⣿⣿⠀⣿⣿⣿⣿⣿
+        		⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀        ⠀⠀⢿⣿⣿⣿⣿⣿⣿⣿⣾⣿⣿⣿⣿⡏
+        		⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀        ⠀⠈⠉⠁⠀⠈⠙⠻⠿⣿⣿⡿⠟⠁
+        		""");
+       System.out.println("\n===== 🎧✮🎸 Guitar Inventory Menu 🎸✮🎧 =====\n");
+        boolean running = true;
+        
+        while (running) {
+        
+            System.out.println("1. Add Guitar as Owner");
+            System.out.println("2. Search Guitar as Customer");
+            System.out.println("3. View All Guitars in Shop");
+            System.out.println("4. Exit");
+
+            System.out.print("Enter your choice: ");
+            String choice = scanner.nextLine();
+
+            switch (choice) {
+                case "1":
+                    addGuitarAsOwner();
+                    break;
+                case "2":
+                    searchAsCustomer();
+                    break;
+                case "3":
+                    viewAllGuitars();
+                    break;
+                case "4":
+                    System.out.println("Thank you for visiting the Guitar Shop!");
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Invalid option! Try again.");
+            }
+        }
+    }
+
+    private void addGuitarAsOwner() {
+        System.out.println("\n=== Add New Guitar ===");
+        String serial = InputValidator.readString(scanner, "Serial Number");
+        double price = InputValidator.readDouble(scanner, "Price");
+        Builder builder = InputValidator.readBuilder(scanner);
+        String model = InputValidator.readString(scanner, "Model");
+        Type type = InputValidator.readType(scanner);
+        int numStrings = InputValidator.readInt(scanner, "Number of Strings");
+        Wood backWood = InputValidator.readWood(scanner, "Back Wood");
+        Wood topWood = InputValidator.readWood(scanner, "Top Wood");
+
+        inventory.addGuitar(serial, price, builder, model, type, numStrings, backWood, topWood);
+        System.out.println("Guitar added successfully!");
+    }
+
+    private void searchAsCustomer() {
+        System.out.println("\n=== Search Guitar ===");
+        Builder builder = InputValidator.readBuilder(scanner, true);
+        String model = InputValidator.readOptionalString(scanner, "Model");
+        Type type = InputValidator.readType(scanner, true);
+        int numStrings = InputValidator.readInt(scanner, "Number of Strings (or skip with -1)");
+        Wood backWood = InputValidator.readWood(scanner, "Back Wood", true);
+        Wood topWood = InputValidator.readWood(scanner, "Top Wood", true);
+
+        GuitarSpecs searchSpec = new GuitarSpecs(builder, model, type, numStrings, backWood, topWood);
+        List<Guitar> results = searchService.searchGuitars(searchSpec);
+
+        if (results.isEmpty()) {
+            System.out.println("No matching guitars found.");
+        } else {
+            System.out.println("Matching Guitars:");
+            printer.printGuitars(results);
+        }
+    }
+
+    private void viewAllGuitars() {
+        List<Guitar> allGuitars = inventory.getAllGuitars();
+        if (allGuitars.isEmpty()) {
+            System.out.println("No guitars available in inventory.");
+        } else {
+            printer.printGuitars(allGuitars);
+        }
+    }
+
+    private void initializeInventory() {
+        inventory.addGuitar("S1001", 14999.95, Builder.FENDER, "Stratocaster", Type.ELECTRIC, 6, Wood.ALDER, Wood.ALDER);
+        inventory.addGuitar("S1002", 13999.95, Builder.MARTIN, "D-28", Type.ACOUSTIC, 6, Wood.INDIAN_ROSEWOOD, Wood.SITKA);
+        inventory.addGuitar("S1003", 16999.95, Builder.GIBSON, "Les Paul", Type.ELECTRIC, 6, Wood.MAHOGANY, Wood.MAPLE);
+        inventory.addGuitar("S1004", 11999.95, Builder.COLLINGS, "OM2H", Type.ACOUSTIC, 6, Wood.CEDAR, Wood.SITKA);
+        inventory.addGuitar("S1005", 12999.95, Builder.OLSON, "SJ", Type.ACOUSTIC, 6, Wood.INDIAN_ROSEWOOD, Wood.ADIRONDACK);
+        inventory.addGuitar("S1006", 14499.95, Builder.RYAN, "Nightingale", Type.ACOUSTIC, 12, Wood.CEDAR, Wood.COCOBOLO);
+        inventory.addGuitar("S1007", 15999.95, Builder.PRS, "Custom 24", Type.ELECTRIC, 6, Wood.MAHOGANY, Wood.MAPLE);
+        inventory.addGuitar("S1008", 11949.95, Builder.FENDER, "Telecaster", Type.ELECTRIC, 6, Wood.ALDER, Wood.MAPLE);
+        inventory.addGuitar("S1009", 13949.95, Builder.GIBSON, "SG", Type.ELECTRIC, 6, Wood.MAHOGANY, Wood.MAHOGANY);
+        inventory.addGuitar("S1010", 9999.95, Builder.ANY, "Universal Sound", Type.ACOUSTIC, 6, Wood.MAPLE, Wood.CEDAR);
+    }
+
+}

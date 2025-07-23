@@ -1,0 +1,26 @@
+package com.aurionpro.GuitarApp.Solution.FinalTest;
+
+import java.util.List;
+
+import com.aurionpro.GuitarApp.Solution.model.Guitar;
+
+public class GuitarPrinter {
+	 public static void displayGuitars(List<Guitar> guitars) {
+	        if (guitars.isEmpty()) {
+	            System.out.println("No guitars available.");
+	            return;
+	        }
+
+	        System.out.printf("%-8s %-8s %-15s %-15s %-10s %-12s %-12s %-8s\n",
+	                "Serial", "Price", "Builder", "Model", "Type", "BackWood", "TopWood", "Strings");
+	        System.out.println("------------------------------------------------------------------------------------------");
+
+	        for (Guitar g : guitars) {
+	            GuitarSpecs spec = g.getSpec();
+	            System.out.printf("%-8s %-8.2f %-15s %-15s %-10s %-12s %-12s %-8d\n",
+	                    g.getSerialNumber(), g.getPrice(),
+	                    spec.getBuilder(), spec.getModel(), spec.getType(),
+	                    spec.getBackWood(), spec.getTopWood(), spec.getNumString());
+	        }
+	    }
+}
