@@ -13,7 +13,7 @@ public class InputValidator {
     }
 
     public static String readOptionalString(Scanner sc, String field) {
-        System.out.print("Enter " + field + " (or press Enter to skip): ");
+        System.out.print("Enter " + field + " : ");
         String input = sc.nextLine().trim();
         return input.isEmpty() ? null : input;
     }
@@ -46,7 +46,7 @@ public class InputValidator {
 
     public static Builder readBuilder(Scanner sc, boolean optional) {
         while (true) {
-            System.out.print("Enter Builder" + (optional ? " (or press Enter to skip)" : "") + ": ");
+            System.out.print("Enter Builder" + (optional ? " " : "") + ": ");
             String input = sc.nextLine().trim().toUpperCase();
             if (input.isEmpty() && optional) return null;
             try {
@@ -80,7 +80,7 @@ public class InputValidator {
 
     public static Wood readWood(Scanner sc, String field, boolean optional) {
         while (true) {
-            System.out.print("Enter " + field + (optional ? " (or press Enter to skip)" : "") + ": ");
+            System.out.print("Enter " + field + (optional ? " " : "") + ": ");
             String input = sc.nextLine().trim().toUpperCase();
             if (input.isEmpty() && optional) return null;
             try {

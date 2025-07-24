@@ -58,6 +58,6 @@
     <fullyQualifiedTypeName name="org.junit.jupiter.api.Test"/>
     <fullyQualifiedTypeName name="com.aurionpro.GuitarApp.Solution.model.Type"/>
     <fullyQualifiedTypeName name="com.aurionpro.GuitarApp.Solution.model.Builder"/>
-    <fullyQualifiedTypeName name="com.aurionpro.GuitarApp.Solution.model.Inventory"/>
     <fullyQualifiedTypeName name="com.aurionpro.GuitarApp.Solution.model.Guitar"/>
+    <fullyQualifiedTypeName name="com.aurionpro.GuitarApp.Solution.model.Inventory"/>
 </qualifiedTypeNameHistroy>

@@ -1,5 +1,0 @@
-package com.aurionpro.GuitarApp.Solution.test;
-
-public class GuitarTest {
-
-}
