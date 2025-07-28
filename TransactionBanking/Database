@@ -1,0 +1,40 @@
+-- ✅ Create the database
+DROP DATABASE IF EXISTS banking_system;
+CREATE DATABASE banking_system;
+USE banking_system;
+
+-- ✅ Table: Admin (Only one admin allowed)
+CREATE TABLE IF NOT EXISTS admin (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    password VARCHAR(255) NOT NULL
+);
+
+-- 🔄 Insert only one default admin
+INSERT INTO admin (password) VALUES ('admin123');
+
+-- ✅ Table: Accounts
+CREATE TABLE IF NOT EXISTS accounts (
+    id INT PRIMARY KEY AUTO_INCREMENT,          -- Account ID
+    name VARCHAR(100) NOT NULL,
+    pin INT NOT NULL,                           -- 4-digit PIN
+    balance DOUBLE DEFAULT 0,
+    account_type ENUM('Savings', 'Current', 'Salary') NOT NULL,
+    is_frozen BOOLEAN DEFAULT FALSE
+);
+
+-- 🧪 Optional sample data
+INSERT INTO accounts (name, pin, balance, account_type) VALUES
+('John Doe', 1234, 5000, 'Savings');
+-- ('Alice Smith', 2345, 15000, 'Current'),
+-- ('Bob Johnson', 3456, 0, 'Salary');
+
+-- ✅ Table: Transactions
+CREATE TABLE IF NOT EXISTS transactions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    account_id INT,
+    type VARCHAR(50),                           -- Deposit, Withdraw, Transfer
+    amount DOUBLE,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
+);
+select * from accounts;
