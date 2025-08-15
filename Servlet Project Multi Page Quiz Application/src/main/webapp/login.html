@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App - Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: backgroundShift 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes backgroundShift {
+            0% { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+            100% { background: linear-gradient(135deg, #764ba2 0%, #667eea 100%); }
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 450px;
+            animation: slideUp 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #4CAF50, #2196F3, #FF9800, #f44336);
+            animation: gradientMove 3s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .app-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .app-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .app-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .app-subtitle {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .form-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            padding-left: 50px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-top: 14px;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-login:hover::before {
+            left: 100%;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-login:active {
+            transform: translateY(-1px);
+        }
+
+        .form-link {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .form-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .form-link a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #667eea;
+            transition: width 0.3s ease;
+        }
+
+        .form-link a:hover::after {
+            width: 100%;
+        }
+
+        .form-link a:hover {
+            color: #5a67d8;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(238, 90, 90, 0.3);
+            animation: shake 0.5s ease-in-out;
+            display: none;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 30px 25px;
+                margin: 10px;
+            }
+
+            .app-title {
+                font-size: 1.6rem;
+            }
+
+            .form-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .login-container {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="login-container">
+        <div class="app-header">
+            <div class="app-icon">
+                <i class="fas fa-brain"></i>
+            </div>
+            <div class="app-title">Quiz Master</div>
+            <div class="app-subtitle">Test Your Knowledge</div>
+        </div>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <h2 class="form-title">
+            <i class="fas fa-sign-in-alt"></i> Welcome Back
+        </h2>
+
+        <form action="login" method="post" id="loginForm">
+            <div class="form-group">
+                <label class="form-label" for="username">Username</label>
+                <div class="input-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <input type="text" 
+                       class="form-input" 
+                       id="username" 
+                       name="username" 
+                       placeholder="Enter your username" 
+                       required 
+                       autocomplete="username">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <div class="input-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <input type="password" 
+                       class="form-input" 
+                       id="password" 
+                       name="password" 
+                       placeholder="Enter your password" 
+                       required 
+                       autocomplete="current-password">
+            </div>
+
+            <button type="submit" class="btn-login">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+        </form>
+
+        <div class="form-link">
+            Don't have an account? 
+            <a href="register.html">
+                <i class="fas fa-user-plus"></i> Create Account
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Add form validation and loading states
+        const loginForm = document.getElementById('loginForm');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const errorMessage = document.getElementById('errorMessage');
+
+        loginForm.addEventListener('submit', function(e) {
+            // Show loading overlay
+            loadingOverlay.style.display = 'flex';
+            
+            // Hide any previous error messages
+            errorMessage.style.display = 'none';
+        });
+
+        // Add input focus animations
+        const inputs = document.querySelectorAll('.form-input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.querySelector('.input-icon').style.color = '#667eea';
+            });
+
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.parentElement.querySelector('.input-icon').style.color = '#adb5bd';
+                }
+            });
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const focusedElement = document.activeElement;
+                if (focusedElement.tagName === 'INPUT') {
+                    const form = focusedElement.closest('form');
+                    if (form && form.checkValidity()) {
+                        form.submit();
+                    }
+                }
+            }
+        });
+
+        // Auto-focus username field when page loads
+        window.addEventListener('load', function() {
+            document.getElementById('username').focus();
+        });
+    </script>
+</body>
+</html>
