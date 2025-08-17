@@ -1,4 +1,4 @@
-# 🎯 Multi Page Quiz Application (Java Servlet Project)
+## 🎯 Multi Page Quiz Application (Java Servlet Project)
 ### 📝 Register Page
 ![Register Page](https://github.com/user-attachments/assets/882313a2-390f-4631-81d4-578ed0e10d25)
 
