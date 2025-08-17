@@ -1,22 +1,5 @@
 # 🎯 Multi Page Quiz Application (Java Servlet Project)
-
-A fully functional multi-page quiz application built using **Java**, **Servlet**, and **MySQL**.  
-The application features user authentication, quiz taking, results review, and session management.
-
 ---
-
-## 🚀 Features
-- **User Registration & Login** (with database integration)
-- **Dynamic Dashboard** showing quiz options
-- **Timed Quiz** with multiple questions
-- **Automatic Result Calculation**
-- **Review Page** for answers
-- **Logout Functionality** with session handling
-
----
-
-## 🖼️ Project Screenshots
-
 ### 📝 Register Page
 ![Register Page](https://github.com/user-attachments/assets/882313a2-390f-4631-81d4-578ed0e10d25)
 
@@ -62,6 +45,20 @@ The application features user authentication, quiz taking, results review, and s
 
 ## 📂 Database
 The project includes a [`Database.sql`](Database.sql) file for importing the required tables and data.
+
+---
+A fully functional multi-page quiz application built using **Java**, **Servlet**, and **MySQL**.  
+The application features user authentication, quiz taking, results review, and session management.
+
+---
+
+## 🚀 Features
+- **User Registration & Login** (with database integration)
+- **Dynamic Dashboard** showing quiz options
+- **Timed Quiz** with multiple questions
+- **Automatic Result Calculation**
+- **Review Page** for answers
+- **Logout Functionality** with session handling
 
 ---
 
