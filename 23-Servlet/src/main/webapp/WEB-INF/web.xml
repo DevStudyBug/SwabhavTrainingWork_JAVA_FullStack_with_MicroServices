@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" id="WebApp_ID" version="6.0">
+  <display-name>23-Servlet</display-name>
+  <servlet>
+    <servlet-name>first</servlet-name>
+    <servlet-class>com.aurionpro.test.FirstServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>first</servlet-name>
+    <url-pattern>/myservlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>Created servlet directly</description>
+    <display-name>ServletDirectCreation</display-name>
+    <servlet-name>ServletDirectCreation</servlet-name>
+    <servlet-class>com.aurionpro.ServletCreationDirectly.ServletDirectCreation</servlet-class>
+    <init-param>
+      <description></description>
+      <param-name>username</param-name>
+      <param-value>anshika</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletDirectCreation</servlet-name>
+    <url-pattern>/ServletDirectCreation</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>Created servlet</description>
+    <display-name>ServletCreation</display-name>
+    <servlet-name>ServletCreation</servlet-name>
+    <servlet-class>com.aurionpro.ServletCreationDirectly.ServletCreation</servlet-class>
+    <init-param>
+      <description></description>
+      <param-name>Password</param-name>
+      <param-value>anshika@123</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletCreation</servlet-name>
+    <url-pattern>/ServletCreation</url-pattern>
+  </servlet-mapping>
+</web-app>
