@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta >
+<title>Currency Converter</title>
+</head>
+<body>
+    <h2>Currency Converter</h2>
+    <form action="convert" method="get">
+        <label>Amount:</label>
+        <input type="number" name="amount"  required><br><br>
+
+        <label>From:</label>
+        <select name="from" required>
+            <option value="USD">USD</option>
+            <option value="INR">INR</option>
+            <option value="EUR">EUR</option>
+        </select><br><br>
+
+        <label>To:</label>
+        <select name="to" required>
+            <option value="USD">USD</option>
+            <option value="INR">INR</option>
+            <option value="EUR">EUR</option>
+        </select><br><br>
+
+        <input type="submit" value="Convert">
+    </form>
+
+</body>
+</html>
+
+<!-- Assignment 2: Currency Converter (Finance Domain) -->
+<!-- Problem Statement: -->
+<!-- Develop a servlet /convert that converts an amount from one currency to another using -->
+<!-- static conversion rates. -->
+<!-- Requirements: -->
+<!--  Accept query parameters amount, from, and to. -->
+<!--  Use hardcoded conversion rates (e.g., USD to INR = 83.0). -->
+<!--  Validate parameters and show formatted result. -->
+<!-- Sample URL: -->
+<!-- http://localhost:8080/convert?amount=100&from=USD&to=INR -->
