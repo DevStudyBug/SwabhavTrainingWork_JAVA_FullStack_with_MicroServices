@@ -1,0 +1,120 @@
+@charset "UTF-8";
+
+/* Basic Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #e0f7fa, #f4f7f9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+}
+
+label {
+    font-weight: 600;
+    display: block;
+    margin-top: 12px;
+    color: #333;
+}
+
+input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    outline: none;
+}
+
+input[type="submit"] {
+    margin-top: 20px;
+    width: 100%;
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+input[type="submit"]:hover {
+    background: #0056b3;
+    transform: scale(1.02);
+}
+
+.report-card {
+    margin-top: 30px;
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    padding: 20px;
+    background: #f0f8ff;
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.1);
+}
+
+.report-card h3 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.report-card p {
+    font-size: 1em;
+    margin: 8px 0;
+    padding: 5px 0;
+    border-bottom: 1px solid #d0e7ff;
+}
+
+.report-card p:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 500px) {
+    .container {
+        padding: 20px;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
+    .report-card h3 {
+        font-size: 1.3em;
+    }
+}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h2>This is JSP Demo</h2>
+
+<% ---- This is scriptlet tag -- %>
+<%
+String name = "Amit";
+out.println("Hello " + name +", welcome to JSP demo page");
+int len = name.length();
+%>
+
+<% --- Expression tag -- %>
+<%= len %>
+</body>
+</html>
