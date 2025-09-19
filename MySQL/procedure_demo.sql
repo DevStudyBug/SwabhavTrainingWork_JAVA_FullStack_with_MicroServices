@@ -1,0 +1,10 @@
+use procedure_demo;
+call Student_procedure;
+call insertIntoStudentTable("anshika" ,22);
+call insertIntoStudentTable("alok" ,22);
+call insertIntoStudentTable("avisha" ,22);
+call display;
+call updatestudent;
+call display;
+call deletestudent(4);
+call display;
