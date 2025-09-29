@@ -1,0 +1,582 @@
+{
+	"info": {
+		"_postman_id": "a62f57e6-bd37-4111-a561-dfed42c0c318",
+		"name": "1-Banking Application",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32628096"
+	},
+	"item": [
+		{
+			"name": "Customer APIs",
+			"item": [
+				{
+					"name": "Get All Customer",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer BY ID",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Customer registered",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Alice Johnson\",\r\n  \"dob\": \"2000-01-01\",\r\n  \"contact_no\": \"9012345678\",\r\n  \"address_id\": 1,\r\n  \"user_id\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/customers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Demo Registration Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response content type is 'text/xml'\", function () {\r",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.equal('text/xml');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response body is not null\", function () {\r",
+									"    const responseData = xml2Json(pm.response.text());\r",
+									"    \r",
+									"    pm.expect(responseData).to.not.be.null;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response XML structure is valid\", function () {\r",
+									"    const responseData = xml2Json(pm.response.text());\r",
+									"\r",
+									"    // Validate that the response is an object\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"  \r",
+									"    // Check for the expected attributes in the root object\r",
+									"    pm.expect(responseData).to.have.all.keys('response', 'status', 'message');\r",
+									"  \r",
+									"    // Further validation can be added here if needed\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbnVzZXIiLCJpYXQiOjE3NTg5ODUwOTUsImV4cCI6MTc1OTAyMTA5NX0.T0SRfeH9scoftfST2fl5Mf62RtqTUk83HjmPNjYrzvY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"anshika123\",\r\n  \"password\": \"pass123\",\r\n  \"email\": \"anshika@example.com\",\r\n  \"name\": \"anshika dubey\",\r\n  \"contactNo\": \"8591245402\",\r\n  \"dob\": \"2002-11-30\",\r\n  \"city\": \"Delhi\",\r\n  \"state\": \"Delhi\",\r\n  \"pincode\": \"110001\"}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "POST http://localhost:8080/api/auth/register",
+							"protocol": "POST http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\": \"anshika123\",\r\n  \"password\": \"pass123\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "POST http://localhost:8080/api/auth/login",
+							"protocol": "POST http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbnNoaWthMTIzIiwiaWF0IjoxNzU4OTkwMzI4LCJleHAiOjE3NTkwMjYzMjh9.UOMpe8Y0ngFbkWs9ZrUwwgAm6kOmrWVy-nxvAggXKh0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Anshika Dubey\",\r\n  \"contactNo\": \"9876543210\",\r\n  \"dob\": \"2002-11-30\",\r\n  \"email\": \"anshika_updated@example.com\",\r\n  \"address\": {\r\n    \"city\": \"Mumbai\",\r\n    \"state\": \"Maharashtra\",\r\n    \"pincode\": \"400001\"\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/customers/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth APIs",
+			"item": [
+				{
+					"name": "Login User - Admin",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"username\": \"adminuser\",\r\n  \"password\": \"admin123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User - cutomer",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"anshika123\",\r\n  \"password\": \"pass123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Account APIs",
+			"item": [
+				{
+					"name": "Create Account (Admin auth used)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbWl0VGl3YXJpIiwiaWF0IjoxNzU5MTMwMTY1LCJleHAiOjE3NTkxNjYxNjV9.160EFcLbz8a11ggDiAB4LRyKCgj2Ik6rn9PfC9eGp7g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"customerId\": 5,\r\n  \"accountType\": \"CURRENT\",\r\n  \"initialDeposit\": 10000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/transactions/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"transactions",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deposit into this account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbnVzZXIiLCJpYXQiOjE3NTkwODczNDksImV4cCI6MTc1OTEyMzM0OX0.qLQP0mUcU3djCMy6E-o1G7XHFLWYIB6CuNbcRoVNv8A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"transtype\": \"DEPOSIT\",\r\n  \"amount\": 2000,\r\n  \"remarks\": \"Salary credit\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/accounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbnVzZXIiLCJpYXQiOjE3NTkxMjE1ODYsImV4cCI6MTc1OTE1NzU4Nn0.SOFjGnEPT_KMApnNx8QeHPF-HIuzw_kfd649L-vxhL0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/accounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deactivate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbnVzZXIiLCJpYXQiOjE3NTkxMjE1ODYsImV4cCI6MTc1OTE1NzU4Nn0.SOFjGnEPT_KMApnNx8QeHPF-HIuzw_kfd649L-vxhL0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/accounts/deactivate/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"accounts",
+								"deactivate",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transaction",
+			"item": [
+				{
+					"name": "debit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbnVzZXIiLCJpYXQiOjE3NTkwODczNDksImV4cCI6MTc1OTEyMzM0OX0.qLQP0mUcU3djCMy6E-o1G7XHFLWYIB6CuNbcRoVNv8A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"transtype\": \"debit\",\r\n  \"amount\": 500,\r\n  \"remarks\": \"ATM withdrawal\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/transactions/account/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"transactions",
+								"account",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "credit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbnVzZXIiLCJpYXQiOjE3NTkwODczNDksImV4cCI6MTc1OTEyMzM0OX0.qLQP0mUcU3djCMy6E-o1G7XHFLWYIB6CuNbcRoVNv8A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"transtype\": \"Withdraw\",\r\n  \"amount\": 1000,\r\n  \"remarks\": \"ATM withdrawal\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/transactions/account/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"transactions",
+								"account",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transfer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbnVzZXIiLCJpYXQiOjE3NTkxMjE1ODYsImV4cCI6MTc1OTE1NzU4Nn0.SOFjGnEPT_KMApnNx8QeHPF-HIuzw_kfd649L-vxhL0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"transtype\": \"transfer\",\r\n  \"amount\": 1000,\r\n  \"destinationAccountId\": 2,\r\n  \"remarks\": \"Rent payment\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/transactions/account/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"transactions",
+								"account",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get transaction by customer id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "passbook",
+			"item": [
+				{
+					"name": "get passbook via email",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
